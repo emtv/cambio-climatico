@@ -1,893 +1,1020 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cambio Climático - Sebastián Tupiño</title>
-
-  <!-- Tipografías -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #fff6e9;
-      --text-main: #5e2222;
-      --text-strong: #7b1b1b;
-      --accent: #ff6a1a;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      scroll-behavior: smooth;
-      overscroll-behavior: none;
-    }
-
-    body {
-      overflow: hidden; /* movimiento controlado por el slider */
-    }
-
-    /* SLIDER VERTICAL */
-    .poster {
-      max-width: 480px;
-      margin: 0 auto;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-      padding: 0 1.25rem;
-    }
-
-    .slides {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.35s ease-in-out;
-    }
-
-    section {
-      height: 100vh;
-      padding: 1.25rem 0 2.3rem;
-      border-bottom: 1px dashed rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .section-portada {
-      justify-content: space-between;
-      padding-top: 3.8rem; /* espacio menú */
-      padding-bottom: 2.3rem;
-    }
-
-    .page-title,
-    h1, h2, h3 {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      color: var(--text-strong);
-      margin: 0 0 0.75rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      letter-spacing: 0.03em;
-    }
-
-    h2 {
-      font-size: 1.45rem;
-      margin-top: 0.5rem;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-    }
-
-    p {
-      margin: 0 0 0.75rem;
-      line-height: 1.5;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .text-left p,
-    .text-left {
-      text-align: left;
-    }
-
-    .small {
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .strong {
-      font-weight: 700;
-    }
-
-    .accent {
-      color: var(--accent);
-    }
-
-    .logo {
-      width: 95px;
-      height: 95px;
-      margin: 0.6rem auto 0.4rem;
-      display: block;
-      border-radius: 50%;
-      object-fit: contain;
-    }
-
-    .big-year {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      font-size: 1.7rem;
-      text-align: center;
-      color: var(--accent);
-      margin-top: 0.7rem;
-    }
-
-    .meta {
-      margin-top: 0.8rem;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-
-    .meta span.label {
-      font-weight: 700;
-      color: var(--text-strong);
-    }
-
-    .meta p {
-      text-align: left;
-      margin-bottom: 0.25rem;
-    }
-
-    /* Reducimos un poco las imágenes */
-    .shape-img,
-    .full-img {
-      width: 92%;
-      max-width: 92%;
-      display: block;
-      margin: 0.6rem auto 0;
-      border-radius: 999px;
-    }
-
-    .full-img {
-      border-radius: 1.25rem;
-    }
-
-    .quote-box {
-      margin: 0.9rem auto 0;
-      padding: 0.7rem 0.9rem;
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.88);
-      font-style: italic;
-      font-size: 0.9rem;
-    }
-
-    .subheading {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      color: var(--text-strong);
-      font-size: 1.15rem;
-      text-align: center;
-      margin: 0.9rem 0 0.35rem;
-    }
-
-    .impacts {
-      margin-top: 1rem;
-    }
-
-    .impact-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .impact-text {
-      flex: 1.1;
-    }
-
-    .impact-text-title {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-size: 1.02rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .impact-text p {
-      text-align: left;
-      margin: 0;
-      font-size: 0.9rem;
-    }
-
-    .impact-img {
-      flex: 1;
-    }
-
-    .impact-img img {
-      width: 100%;
-      display: block;
-      border-radius: 999px;
-    }
-
-    ul {
-      padding-left: 1.1rem;
-      margin: 0.4rem 0 0;
-      font-size: 0.95rem;
-    }
-
-    ul li {
-      margin-bottom: 0.25rem;
-    }
-
-    .actions-block {
-      margin-top: 0.9rem;
-    }
-
-    .actions-title {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 0.25rem;
-    }
-
-    .contribution-text {
-      margin-top: 0.7rem;
-    }
-
-    .final-quote {
-      margin-top: 1rem;
-      font-style: italic;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .credits-final {
-      margin-top: 1.2rem;
-      font-size: 1rem;
-      line-height: 1.8;
-      text-align: left;
-    }
-
-    .credits-final p {
-      text-align: left;
-    }
-
-    .credits-title {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      font-size: 1.6rem;
-      text-align: center;
-      margin-bottom: 0.8rem;
-      color: var(--text-strong);
-    }
-
-    .share-block {
-      margin-top: 1.2rem;
-      text-align: center;
-    }
-
-    .share-block p {
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .share-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-share,
-    .btn-share-wa {
-      appearance: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 0.7rem 1.1rem;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-    }
-
-    .btn-share {
-      background: var(--text-main);
-      color: #fff;
-    }
-
-    .btn-share-wa {
-      background: #25D366;
-      color: #fff;
-    }
-
-    .btn-share-wa span.icon {
-      font-size: 1.1rem;
-      line-height: 0;
-    }
-
-    @media (max-width: 360px) {
-      .impact-row {
-        flex-direction: column;
-      }
-      .impact-img {
-        width: 100%;
-      }
-    }
-
-    /* HAMBURGER MENU A LA DERECHA */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      max-width: 480px;
-      margin: 0 auto;
-      height: 3.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 1.25rem;
-      z-index: 30;
-      pointer-events: none;
-    }
-
-    .hamburger {
-      pointer-events: auto;
-      width: 48px;
-      height: 48px;
-      border-radius: 999px;
-      border: 1px solid rgba(94, 34, 34, 0.28);
-      background: rgba(255, 255, 255, 0.85);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    }
-
-    .hamburger:active {
-      transform: scale(0.94);
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.6);
-    }
-
-    .hamburger-lines {
-      width: 20px;
-      height: 16px;
-      position: relative;
-    }
-
-    .hamburger-lines span {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 2.4px;
-      border-radius: 999px;
-      background: var(--text-main);
-      transition: transform 0.2s, opacity 0.2s, top 0.2s, bottom 0.2s;
-    }
-
-    .hamburger-lines span:nth-child(1) {
-      top: 0;
-    }
-
-    .hamburger-lines span:nth-child(2) {
-      top: 6.5px;
-    }
-
-    .hamburger-lines span:nth-child(3) {
-      bottom: 0;
-    }
-
-    body.nav-open .hamburger-lines span:nth-child(1) {
-      top: 6.5px;
-      transform: rotate(45deg);
-    }
-
-    body.nav-open .hamburger-lines span:nth-child(2) {
-      opacity: 0;
-    }
-
-    body.nav-open .hamburger-lines span:nth-child(3) {
-      bottom: 6.5px;
-      transform: rotate(-45deg);
-    }
-
-    /* OVERLAY DEL MENÚ */
-    .menu-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 5, 5, 0.88);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-      z-index: 25;
-    }
-
-    body.nav-open .menu-overlay {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .menu-inner {
-      width: 100%;
-      max-width: 420px;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: #ffe9cf;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .menu-title {
-      font-family: "Baloo 2", system-ui, sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 1.8rem;
-      opacity: 0.9;
-    }
-
-    .menu-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    .menu-list li {
-      margin-bottom: 1rem;
-    }
-
-    .menu-item {
-      width: 100%;
-      max-width: 320px;
-      padding: 0.9rem 1.2rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 233, 207, 0.45);
-      background: rgba(47, 24, 18, 0.55);
-      color: #ffe9cf;
-      font-family: "Baloo 2", system-ui, sans-serif;
-      font-size: 1.25rem;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-    }
-
-    .menu-item:active {
-      background: rgba(255, 233, 207, 0.15);
-    }
-
-    /* Botón flotante "swipe" */
-    .swipe-hint-wrap {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 1.1rem;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      z-index: 20;
-      pointer-events: none;
-    }
-
-    .swipe-hint {
-      pointer-events: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(94,34,34,0.25);
-      background: rgba(255, 255, 255, 0.9);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-main);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      animation: swipeBounce 1.4s ease-in-out infinite;
-    }
-
-    .swipe-hint-icon {
-      font-size: 1rem;
-    }
-
-    @keyframes swipeBounce {
-      0%, 100% {
-        transform: translateY(0);
-        opacity: 0.85;
-      }
-      50% {
-        transform: translateY(-8px);
-        opacity: 1;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Barra superior con menú hamburguesa a la derecha -->
-  <div class="top-bar">
-    <button class="hamburger" aria-label="Abrir menú">
-      <div class="hamburger-lines">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </button>
-  </div>
-
-  <!-- Overlay de navegación -->
-  <div class="menu-overlay">
-    <div class="menu-inner">
-      <div class="menu-title">Secciones</div>
-      <ul class="menu-list">
-        <li><button class="menu-item" data-index="0">Portada</button></li>
-        <li><button class="menu-item" data-index="1">¿Qué es?</button></li>
-        <li><button class="menu-item" data-index="2">Causas y efectos</button></li>
-        <li><button class="menu-item" data-index="3">Impactos</button></li>
-        <li><button class="menu-item" data-index="4">Medidas</button></li>
-        <li><button class="menu-item" data-index="5">¿Cómo contribuir?</button></li>
-        <li><button class="menu-item" data-index="6">Créditos</button></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Botón flotante indicando swipe -->
-  <div class="swipe-hint-wrap">
-    <button class="swipe-hint" type="button">
-      <span class="swipe-hint-icon">👇</span>
-      <span>Desliza</span>
-    </button>
-  </div>
-
-  <!-- SLIDER VERTICAL -->
-  <main class="poster" id="poster">
-    <div class="slides" id="slides">
-
-      <!-- 1. Portada -->
-      <section id="portada" class="section-portada">
-        <div>
-          <p class="small strong">
-            “AÑO DE LA RECUPERACIÓN Y LA CONSOLIDACIÓN<br>
-            DE LA ECONOMÍA PERUANA”
-          </p>
-
-          <p class="page-title accent" style="margin-top:0.8rem;">
-            COLEGIO BILINGÜE<br>
-            SANTA MARÍA DE LA GRACIA
-          </p>
-
-          <img src="img/logo-colegio.png" alt="Colegio Santa María de la Gracia" class="logo">
-
-          <h1>CAMBIO CLIMÁTICO</h1>
-
-          <img src="img/portada-cambio-climatico.png"
-               alt="Ilustración cambio climático"
-               class="shape-img">
-        </div>
-
-        <div>
-          <div class="meta">
-            <p><span class="label">Alumno:</span> Sebastián Tupiño Cervantes</p>
-            <p><span class="label">Profesora:</span> Mary De la Cruz</p>
-            <p><span class="label">Grado:</span> 2do Primaria</p>
-          </div>
-
-          <p class="big-year">2025</p>
-        </div>
-      </section>
-
-      <!-- 2. ¿Qué es el cambio climático? -->
-      <section id="que-es">
-        <div>
-          <h2>¿Qué es el cambio<br>climático?</h2>
-          <p>
-            Se refiere a los cambios de relevancia que han sufrido los niveles del clima,
-            a nivel de la temperatura, la lluvia y otros aspectos externos, como
-            consecuencia en parte de la actividad humana.
-          </p>
-
-          <img src="img/que-es-cambio-climatico.png"
-               alt="Ciudad afectada por el cambio climático"
-               class="shape-img">
-
-          <div class="quote-box">
-            “De la humanidad y sus actividades depende la sostenibilidad del planeta”
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Causas y efectos -->
-      <section id="causas" class="text-left">
-        <div>
-          <img src="img/deforestacion.png"
-               alt="Deforestación"
-               class="full-img">
-
-          <h2>¿Cuáles son las principales<br>causas del cambio climático?</h2>
-
-          <p>
-            Las principales causas del cambio climático se relacionan a actividades como la
-            deforestación (menos absorción en CO<sub>2</sub>), la emisión de Gases de
-            Efecto Invernadero (GEI), la industrialización, etc.
-          </p>
-
-          <h3 class="subheading">Efectos y consecuencias</h3>
-
-          <p>
-            El principal efecto del cambio climático ha sido el cambio drástico de temperaturas
-            en todo el planeta. Dicho cambio ha traído consigo ahora el surgimiento de
-            fenómenos meteorológicos de relevancia, altos niveles de deforestación,
-            pérdida de biodiversidad, entre otros.
-          </p>
-        </div>
-      </section>
-
-      <!-- 4. Impactos -->
-      <section id="impactos">
-        <div>
-          <h2>¿Qué impactos ha<br>tenido?</h2>
-
-          <div class="impacts">
-            <div class="impact-row">
-              <div class="impact-text">
-                <div class="impact-text-title">Salud</div>
-                <p>
-                  Mayor probabilidad de enfermedades respiratorias, propagación de enfermedades
-                  por vectores (mosquitos) como el dengue.
-                </p>
-              </div>
-              <div class="impact-img">
-                <img src="img/impacto-salud.png" alt="Mosquito sobre piel">
-              </div>
-            </div>
-
-            <div class="impact-row">
-              <div class="impact-text">
-                <div class="impact-text-title">Agricultura</div>
-                <p>
-                  Afecta los ciclos de los cultivos, impactando la sostenibilidad alimentaria.
-                </p>
-              </div>
-              <div class="impact-img">
-                <img src="img/impacto-agricultura.png" alt="Cultivos de trigo">
-              </div>
-            </div>
-
-            <div class="impact-row">
-              <div class="impact-text">
-                <div class="impact-text-title">Economía</div>
-                <p>
-                  Los fenómenos meteorológicos atípicos pueden afectar la infraestructura económica.
-                </p>
-              </div>
-              <div class="impact-img">
-                <img src="img/impacto-economia.png" alt="Monedas y gráfico económico">
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. Medidas para mitigarlo -->
-      <section id="medidas" class="text-left">
-        <div>
-          <h2 style="text-align:center;">Medidas para<br>mitigarlo</h2>
-
-          <div class="actions-block">
-            <div class="actions-title">Acciones personales</div>
-            <ul>
-              <li>Usar medios de transporte amigables con el medio ambiente.</li>
-              <li>Reducir consumo energético.</li>
-              <li>Reciclar y reutilizar materiales.</li>
-            </ul>
-
-            <img style="width: 50%;" src="img/acciones-personales.png"
-                 alt="Persona reciclando"
-                 class="shape-img">
-          </div>
-
-          <div class="actions-block">
-            <div class="actions-title">Acciones gubernamentales</div>
-            <ul>
-              <li>Fomentar uso de energías alternativas.</li>
-              <li>Medidas de reducción de CO<sub>2</sub>.</li>
-              <li>Legislación de conservación.</li>
-            </ul>
-
-            <img src="img/acciones-gubernamentales.png"
-                 alt="Paneles solares"
-                 class="shape-img">
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. ¿Cómo puedo contribuir? -->
-      <section id="contribuir">
-        <div>
-          <h2>¿Cómo puedo<br>contribuir?</h2>
-
-          <p class="contribution-text">
-            El cambio individual, sobre todo a nivel de los patrones de consumo de bienes,
-            el uso de transportes no contaminantes, la reutilización y reciclaje de materiales,
-            entre otras acciones, son de gran relevancia para hacer frente a este fenómeno global.
-          </p>
-
-          <img src="img/como-contribuir.png"
-               alt="Personas recogiendo basura en un bosque"
-               class="full-img">
-
-          <p class="final-quote">
-            “Los pequeños cambios hacen una gran diferencia cuando los hacemos todos juntos”
-          </p>
-        </div>
-      </section>
-
-      <!-- 7. Créditos (pantalla completa) -->
-      <section id="creditos">
-        <div>
-          <h2 class="credits-title">Créditos</h2>
-
-          <div class="credits-final">
-            <p><strong>Alumno:</strong> Sebastián Tupiño Cervantes</p>
-            <p><strong>Grado:</strong> 2do Primaria</p>
-            <p><strong>Profesora:</strong> Mary De la Cruz</p>
-            <p><strong>Colegio:</strong> Colegio Bilingüe Santa María de la Gracia</p>
-            <p><strong>Año:</strong> 2025</p>
-          </div>
-
-          <div class="share-block">
-            <p>Si te pareció interesante, compártelo:</p>
-            <div class="share-buttons">
-              <button type="button" class="btn-share">Compartir</button>
-              <a href="#" class="btn-share-wa" id="btn-share-wa">
-                <span class="icon">🟢</span>
-                <span>WhatsApp</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <script>
-    // ----- Slider vertical (scroll + swipe + botones) -----
-    const slidesContainer = document.getElementById('slides');
-    const sections = Array.from(slidesContainer.querySelectorAll('section'));
-    const totalSlides = sections.length;
-    let currentIndex = 0;
-    let isAnimating = false;
-
-    function goToSlide(index) {
-      if (index < 0 || index >= totalSlides || isAnimating) return;
-      isAnimating = true;
-      currentIndex = index;
-      slidesContainer.style.transform = `translateY(-${index * 100}vh)`;
-      setTimeout(() => { isAnimating = false; }, 380);
-    }
-
-    const poster = document.getElementById('poster');
-
-    // Scroll (wheel) -> una pantalla por vez
-    poster.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (isAnimating) return;
-      if (e.deltaY > 25) {
-        goToSlide(currentIndex + 1);
-      } else if (e.deltaY < -25) {
-        goToSlide(currentIndex - 1);
-      }
-    }, { passive: false });
-
-    // Swipe vertical (touch)
-    let startY = 0;
-    let startTime = 0;
-
-    poster.addEventListener('touchstart', (e) => {
-      if (e.touches.length !== 1) return;
-      startY = e.touches[0].clientY;
-      startTime = Date.now();
-    }, { passive: true });
-
-    poster.addEventListener('touchend', (e) => {
-      const touch = e.changedTouches[0];
-      const deltaY = touch.clientY - startY;
-      const duration = Date.now() - startTime;
-
-      const minDistance = 60;
-      const maxDuration = 700;
-
-      if (Math.abs(deltaY) > minDistance && duration < maxDuration) {
-        if (deltaY < 0) {
-          goToSlide(currentIndex + 1);
-        } else {
-          goToSlide(currentIndex - 1);
-        }
-      }
-    }, { passive: true });
-
-    // Botón flotante "Desliza" -> ir a la siguiente slide
-    const swipeHintBtn = document.querySelector('.swipe-hint');
-    swipeHintBtn.addEventListener('click', () => {
-      goToSlide(currentIndex + 1);
-    });
-
-    // ----- Menú hamburguesa -----
-    const hamburger = document.querySelector('.hamburger');
-    const menuItems = document.querySelectorAll('.menu-item');
-
-    hamburger.addEventListener('click', () => {
-      document.body.classList.toggle('nav-open');
-    });
-
-    menuItems.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const index = parseInt(btn.dataset.index, 10);
-        goToSlide(index);
-        document.body.classList.remove('nav-open');
-      });
-    });
-
-    // ----- Compartir -----
-    const shareBtn = document.querySelector('.btn-share');
-    const shareWaBtn = document.getElementById('btn-share-wa');
-
-    const shareData = {
-      title: 'Cambio climático - Sebastián Tupiño',
-      text: 'Revisa esta infografía sobre el cambio climático hecha por Sebastián Tupiño (2do de Primaria).',
-      url: window.location.href
-    };
-
-    shareBtn.addEventListener('click', async () => {
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          // usuario canceló
-        }
-      } else {
-        const waUrl = 'https://api.whatsapp.com/send?text=' +
-          encodeURIComponent(`${shareData.text} ${shareData.url}`);
-        window.open(waUrl, '_blank');
-      }
-    });
-
-    shareWaBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const waUrl = 'https://api.whatsapp.com/send?text=' +
-        encodeURIComponent(`${shareData.text} ${shareData.url}`);
-      window.open(waUrl, '_blank');
-    });
-  </script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Cambio Climático - Sebastián Tupiño</title>
+
+		<!-- Tipografías -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Montserrat:wght@300;400;600;700&display=swap"
+			rel="stylesheet" />
+
+		<style>
+			:root {
+				--bg: #fff6e9;
+				--text-main: #5e2222;
+				--text-strong: #7b1b1b;
+				--accent: #ff6a1a;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				font-family: "Montserrat", system-ui, -apple-system,
+					BlinkMacSystemFont, sans-serif;
+				background: var(--bg);
+				color: var(--text-main);
+				scroll-behavior: smooth;
+				overscroll-behavior: none;
+			}
+
+			body {
+				overflow: hidden; /* movimiento controlado por el slider */
+			}
+
+			/* SLIDER VERTICAL */
+			.poster {
+				max-width: 480px;
+				margin: 0 auto;
+				height: 100vh;
+				overflow: hidden;
+				position: relative;
+				padding: 0 1.25rem;
+			}
+
+			.slides {
+				width: 100%;
+				height: 100%;
+				transition: transform 0.35s ease-in-out;
+			}
+
+			section {
+				height: 100vh;
+				padding: 1.25rem 0 2.3rem;
+				border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+
+			.section-portada {
+				justify-content: space-between;
+				padding-top: 1.8rem; /* espacio menú */
+				padding-bottom: 2.3rem;
+			}
+
+			.page-title,
+			h1,
+			h2,
+			h3 {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				color: var(--text-strong);
+				margin: 0 0 0.75rem;
+				text-align: center;
+			}
+
+			h1 {
+				font-size: 1.6rem;
+				letter-spacing: 0.03em;
+			}
+
+			h2 {
+				font-size: 1.45rem;
+				margin-top: 0.5rem;
+			}
+
+			h3 {
+				font-size: 1.25rem;
+			}
+
+			p {
+				margin: 0 0 0.75rem;
+				line-height: 1.5;
+				text-align: center;
+				font-size: 0.95rem;
+			}
+
+			.text-left p,
+			.text-left {
+				text-align: left;
+			}
+
+			.small {
+				font-size: 0.72rem;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.strong {
+				font-weight: 700;
+			}
+
+			.accent {
+				color: var(--accent);
+			}
+
+			.logo {
+				width: 95px;
+				height: 95px;
+				margin: 0.6rem auto 0.4rem;
+				display: block;
+				border-radius: 50%;
+				object-fit: contain;
+			}
+
+			.big-year {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				font-size: 1.7rem;
+				text-align: center;
+				color: var(--accent);
+				margin-top: 0.7rem;
+			}
+
+			.meta {
+				margin-top: 0.8rem;
+				font-size: 0.9rem;
+				line-height: 1.7;
+			}
+
+			.meta span.label {
+				font-weight: 700;
+				color: var(--text-strong);
+			}
+
+			.meta p {
+				text-align: left;
+				margin-bottom: 0.25rem;
+			}
+
+			/* Reducimos un poco las imágenes */
+			.shape-img,
+			.full-img {
+				width: 50%;
+				max-width: 50%;
+				display: block;
+				margin: 0.6rem auto 0;
+				border-radius: 999px;
+			}
+
+			.full-img {
+				border-radius: 1.25rem;
+			}
+
+			.quote-box {
+				margin: 0.9rem auto 0;
+				padding: 0.7rem 0.9rem;
+				border-radius: 1rem;
+				background: rgba(255, 255, 255, 0.88);
+				font-style: italic;
+				font-size: 0.9rem;
+			}
+
+			.subheading {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				color: var(--text-strong);
+				font-size: 1.15rem;
+				text-align: center;
+				margin: 0.9rem 0 0.35rem;
+			}
+
+			.impacts {
+				margin-top: 1rem;
+			}
+
+			.impact-row {
+				display: flex;
+				align-items: flex-start;
+				gap: 0.75rem;
+				margin-bottom: 1.1rem;
+			}
+
+			.impact-text {
+				flex: 1.1;
+			}
+
+			.impact-text-title {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				text-transform: uppercase;
+				color: var(--accent);
+				font-size: 1.02rem;
+				margin-bottom: 0.25rem;
+			}
+
+			.impact-text p {
+				text-align: left;
+				margin: 0;
+				font-size: 0.9rem;
+			}
+
+			.impact-img {
+				flex: 1;
+			}
+
+			.impact-img img {
+				width: 40%;
+				display: block;
+				border-radius: 999px;
+				position: absolute;
+				margin-top: -10%;
+			}
+
+			ul {
+				padding-left: 1.1rem;
+				margin: 0.4rem 0 0;
+				font-size: 0.95rem;
+			}
+
+			ul li {
+				margin-bottom: 0.25rem;
+			}
+
+			.actions-block {
+				margin-top: 0.9rem;
+			}
+
+			.actions-title {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				text-transform: uppercase;
+				color: var(--accent);
+				text-align: center;
+				margin-bottom: 0.25rem;
+			}
+
+			.contribution-text {
+				margin-top: 0.7rem;
+			}
+
+			.final-quote {
+				margin-top: 1rem;
+				font-style: italic;
+				text-align: center;
+				font-size: 0.95rem;
+			}
+
+			.credits-final {
+				margin-top: 1.2rem;
+				font-size: 1rem;
+				line-height: 1.8;
+				text-align: left;
+			}
+
+			.credits-final p {
+				text-align: left;
+			}
+
+			.credits-title {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				font-size: 1.6rem;
+				text-align: center;
+				margin-bottom: 0.8rem;
+				color: var(--text-strong);
+			}
+
+			.share-block {
+				margin-top: 1.2rem;
+				text-align: center;
+			}
+
+			.share-block p {
+				margin-bottom: 0.5rem;
+				font-size: 0.9rem;
+				text-align: center;
+			}
+
+			.share-buttons {
+				display: flex;
+				justify-content: center;
+				gap: 0.6rem;
+				flex-wrap: wrap;
+			}
+
+			.btn-share,
+			.btn-share-wa {
+				appearance: none;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				padding: 0.7rem 1.1rem;
+				border-radius: 999px;
+				font-size: 0.9rem;
+				font-weight: 600;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				text-decoration: none;
+			}
+
+			.btn-share {
+				background: var(--text-main);
+				color: #fff;
+			}
+
+			.btn-share-wa {
+				background: #25d366;
+				color: #fff;
+			}
+
+			.btn-share-wa span.icon {
+				font-size: 1.1rem;
+				line-height: 0;
+			}
+
+			@media (max-width: 360px) {
+				.impact-row {
+					flex-direction: column;
+				}
+				.impact-img {
+					width: 100%;
+				}
+			}
+
+			/* HAMBURGER MENU A LA DERECHA */
+			.top-bar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				max-width: 480px;
+				margin: 0 auto;
+				height: 3.4rem;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				padding: 0 1.25rem;
+				z-index: 30;
+				pointer-events: none;
+			}
+
+			.hamburger {
+				pointer-events: auto;
+				width: 48px;
+				height: 48px;
+				border-radius: 999px;
+				border: 1px solid rgba(94, 34, 34, 0.28);
+				background: rgba(255, 255, 255, 0.85);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				backdrop-filter: blur(8px);
+				-webkit-backdrop-filter: blur(8px);
+				transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+			}
+
+			.hamburger:active {
+				transform: scale(0.94);
+				box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+			}
+
+			.hamburger-lines {
+				width: 20px;
+				height: 16px;
+				position: relative;
+			}
+
+			.hamburger-lines span {
+				position: absolute;
+				left: 0;
+				right: 0;
+				height: 2.4px;
+				border-radius: 999px;
+				background: var(--text-main);
+				transition: transform 0.2s, opacity 0.2s, top 0.2s, bottom 0.2s;
+			}
+
+			.hamburger-lines span:nth-child(1) {
+				top: 0;
+			}
+
+			.hamburger-lines span:nth-child(2) {
+				top: 6.5px;
+			}
+
+			.hamburger-lines span:nth-child(3) {
+				bottom: 0;
+			}
+
+			body.nav-open .hamburger-lines span:nth-child(1) {
+				top: 6.5px;
+				transform: rotate(45deg);
+			}
+
+			body.nav-open .hamburger-lines span:nth-child(2) {
+				opacity: 0;
+			}
+
+			body.nav-open .hamburger-lines span:nth-child(3) {
+				bottom: 6.5px;
+				transform: rotate(-45deg);
+			}
+
+			/* OVERLAY DEL MENÚ */
+			.menu-overlay {
+				position: fixed;
+				inset: 0;
+				background: rgba(15, 5, 5, 0.88);
+				backdrop-filter: blur(10px);
+				-webkit-backdrop-filter: blur(10px);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.25s;
+				z-index: 25;
+			}
+
+			body.nav-open .menu-overlay {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			.menu-inner {
+				width: 100%;
+				max-width: 420px;
+				padding: 2rem 1.5rem;
+				text-align: center;
+				color: #ffe9cf;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.menu-title {
+				font-family: "Baloo 2", system-ui, sans-serif;
+				font-size: 1.4rem;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				margin-bottom: 1.8rem;
+				opacity: 0.9;
+			}
+
+			.menu-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				width: 100%;
+			}
+
+			.menu-list li {
+				margin-bottom: 1rem;
+			}
+
+			.menu-item {
+				width: 100%;
+				max-width: 320px;
+				padding: 0.9rem 1.2rem;
+				border-radius: 999px;
+				border: 1px solid rgba(255, 233, 207, 0.45);
+				background: rgba(47, 24, 18, 0.55);
+				color: #ffe9cf;
+				font-family: "Baloo 2", system-ui, sans-serif;
+				font-size: 1.25rem;
+				letter-spacing: 0.04em;
+				cursor: pointer;
+			}
+
+			.menu-item:active {
+				background: rgba(255, 233, 207, 0.15);
+			}
+
+			/* Botón flotante "swipe" */
+			.swipe-hint-wrap {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 1.1rem;
+				max-width: 480px;
+				margin: 0 auto;
+				display: flex;
+				justify-content: center;
+				z-index: 20;
+				pointer-events: none;
+			}
+
+			.swipe-hint {
+				pointer-events: auto;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				padding: 0.45rem 0.9rem;
+				border-radius: 999px;
+				border: 1px solid rgba(94, 34, 34, 0.25);
+				background: rgba(255, 255, 255, 0.9);
+				font-size: 0.82rem;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text-main);
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+				animation: swipeBounce 1.4s ease-in-out infinite;
+			}
+
+			.swipe-hint-icon {
+				font-size: 1rem;
+			}
+
+			@keyframes swipeBounce {
+				0%,
+				100% {
+					transform: translateY(0);
+					opacity: 0.85;
+				}
+				50% {
+					transform: translateY(-8px);
+					opacity: 1;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Barra superior con menú hamburguesa a la derecha -->
+		<div class="top-bar">
+			<button class="hamburger" aria-label="Abrir menú">
+				<div class="hamburger-lines">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</button>
+		</div>
+
+		<!-- Overlay de navegación -->
+		<div class="menu-overlay">
+			<div class="menu-inner">
+				<div class="menu-title">Secciones</div>
+				<ul class="menu-list">
+					<li>
+						<button class="menu-item" data-index="0">
+							Portada
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="1">
+							¿Qué es?
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="2">
+							Causas y efectos
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="3">
+							Impactos
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="4">
+							Medidas
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="5">
+							¿Cómo contribuir?
+						</button>
+					</li>
+					<li>
+						<button class="menu-item" data-index="6">
+							Créditos
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Botón flotante indicando swipe -->
+		<div class="swipe-hint-wrap">
+			<button class="swipe-hint" type="button">
+				<span class="swipe-hint-icon">👇</span>
+				<span>Desliza</span>
+			</button>
+		</div>
+
+		<!-- SLIDER VERTICAL -->
+		<main class="poster" id="poster">
+			<div class="slides" id="slides">
+				<!-- 1. Portada -->
+				<section id="portada" class="section-portada">
+					<div>
+						<p class="small strong">
+							“AÑO DE LA RECUPERACIÓN Y LA CONSOLIDACIÓN<br />
+							DE LA ECONOMÍA PERUANA”
+						</p>
+
+						<p class="page-title accent" style="margin-top: 0.8rem">
+							COLEGIO BILINGÜE<br />
+							SANTA MARÍA DE LA GRACIA
+						</p>
+
+						<img
+							src="img/logo-colegio.png"
+							alt="Colegio Santa María de la Gracia"
+							class="logo" />
+
+						<h1>CAMBIO CLIMÁTICO</h1>
+
+						<img
+							style="width: 50%"
+							src="img/portada-cambio-climatico.png"
+							alt="Ilustración cambio climático"
+							class="shape-img" />
+					</div>
+
+					<div>
+						<div class="meta">
+							<p>
+								<span class="label">Alumno:</span> Sebastián
+								Tupiño Cervantes
+							</p>
+							<p>
+								<span class="label">Profesora:</span> Mary De la
+								Cruz
+							</p>
+							<p>
+								<span class="label">Grado:</span> 2do Primaria
+							</p>
+						</div>
+
+						<p class="big-year">2025</p>
+					</div>
+				</section>
+
+				<!-- 2. ¿Qué es el cambio climático? -->
+				<section id="que-es">
+					<div>
+						<h2>¿Qué es el cambio<br />climático?</h2>
+						<p>
+							Se refiere a los cambios de relevancia que han
+							sufrido los niveles del clima, a nivel de la
+							temperatura, la lluvia y otros aspectos externos,
+							como consecuencia en parte de la actividad humana.
+						</p>
+
+						<img
+							src="img/que-es-cambio-climatico.png"
+							alt="Ciudad afectada por el cambio climático"
+							class="shape-img" />
+
+						<div class="quote-box">
+							“De la humanidad y sus actividades depende la
+							sostenibilidad del planeta”
+						</div>
+					</div>
+				</section>
+
+				<!-- 3. Causas y efectos -->
+				<section id="causas" class="text-left">
+					<div>
+						<img
+							src="img/deforestacion.png"
+							alt="Deforestación"
+							class="full-img" />
+
+						<h2>
+							¿Cuáles son las principales<br />causas del cambio
+							climático?
+						</h2>
+
+						<p>
+							Las principales causas del cambio climático se
+							relacionan a actividades como la deforestación
+							(menos absorción en CO<sub>2</sub>), la emisión de
+							Gases de Efecto Invernadero (GEI), la
+							industrialización, etc.
+						</p>
+
+						<h3 class="subheading">Efectos y consecuencias</h3>
+
+						<p>
+							El principal efecto del cambio climático ha sido el
+							cambio drástico de temperaturas en todo el planeta.
+							Dicho cambio ha traído consigo ahora el surgimiento
+							de fenómenos meteorológicos de relevancia, altos
+							niveles de deforestación, pérdida de biodiversidad,
+							entre otros.
+						</p>
+					</div>
+				</section>
+
+				<!-- 4. Impactos -->
+				<section id="impactos">
+					<div>
+						<h2>¿Qué impactos ha<br />tenido?</h2>
+
+						<div class="impacts">
+							<div class="impact-row">
+								<div class="impact-text">
+									<div class="impact-text-title">Salud</div>
+									<p>
+										Mayor probabilidad de enfermedades
+										respiratorias, propagación de
+										enfermedades por vectores (mosquitos)
+										como el dengue.
+									</p>
+								</div>
+								<div class="impact-img">
+									<img
+										src="img/impacto-salud.png"
+										alt="Mosquito sobre piel" />
+								</div>
+							</div>
+
+							<div class="impact-row">
+								<div class="impact-text">
+									<div class="impact-text-title">
+										Agricultura
+									</div>
+									<p>
+										Afecta los ciclos de los cultivos,
+										impactando la sostenibilidad
+										alimentaria.
+									</p>
+								</div>
+								<div class="impact-img">
+									<img
+										src="img/impacto-agricultura.png"
+										alt="Cultivos de trigo" />
+								</div>
+							</div>
+
+							<div class="impact-row">
+								<div class="impact-text">
+									<div class="impact-text-title">
+										Economía
+									</div>
+									<p>
+										Los fenómenos meteorológicos atípicos
+										pueden afectar la infraestructura
+										económica.
+									</p>
+								</div>
+								<div class="impact-img">
+									<img
+										src="img/impacto-economia.png"
+										alt="Monedas y gráfico económico" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 5. Medidas para mitigarlo -->
+				<section id="medidas" class="text-left">
+					<div>
+						<h2 style="text-align: center">
+							Medidas para<br />mitigarlo
+						</h2>
+
+						<div class="actions-block">
+							<div class="actions-title">Acciones personales</div>
+							<ul>
+								<li>
+									Usar medios de transporte amigables con el
+									medio ambiente.
+								</li>
+								<li>Reducir consumo energético.</li>
+								<li>Reciclar y reutilizar materiales.</li>
+							</ul>
+
+							<img style="width: 50%;position: absolute;z-index: -999;opacity: 0.3;" src="img/acciones-personales.png" alt="Persona reciclando" class="shape-img">
+						</div>
+
+						<div class="actions-block">
+							<div class="actions-title">
+								Acciones gubernamentales
+							</div>
+							<ul>
+								<li>Fomentar uso de energías alternativas.</li>
+								<li>Medidas de reducción de CO<sub>2</sub>.</li>
+								<li>Legislación de conservación.</li>
+							</ul>
+
+							<img
+								src="img/acciones-gubernamentales.png"
+								alt="Paneles solares"
+								class="shape-img"
+								style="
+									position: absolute;
+									margin-top: 35%;
+									right: -1%;
+									opacity: 0.7;
+								" />
+						</div>
+					</div>
+				</section>
+
+				<!-- 6. ¿Cómo puedo contribuir? -->
+				<section id="contribuir">
+					<div>
+						<h2>¿Cómo puedo<br />contribuir?</h2>
+
+						<p class="contribution-text">
+							El cambio individual, sobre todo a nivel de los
+							patrones de consumo de bienes, el uso de transportes
+							no contaminantes, la reutilización y reciclaje de
+							materiales, entre otras acciones, son de gran
+							relevancia para hacer frente a este fenómeno global.
+						</p>
+
+						<img
+							src="img/como-contribuir.png"
+							alt="Personas recogiendo basura en un bosque"
+							class="full-img" />
+
+						<p class="final-quote">
+							“Los pequeños cambios hacen una gran diferencia
+							cuando los hacemos todos juntos”
+						</p>
+					</div>
+				</section>
+
+				<!-- 7. Créditos (pantalla completa) -->
+				<section id="creditos">
+					<div>
+						<h2 class="credits-title">Créditos</h2>
+
+						<div class="credits-final">
+							<p>
+								<strong>Alumno:</strong> Sebastián Tupiño
+								Cervantes
+							</p>
+							<p><strong>Grado:</strong> 2do Primaria</p>
+							<p><strong>Profesora:</strong> Mary De la Cruz</p>
+							<p>
+								<strong>Colegio:</strong> Colegio Bilingüe Santa
+								María de la Gracia
+							</p>
+							<p><strong>Año:</strong> 2025</p>
+						</div>
+
+						<div class="share-block">
+							<p>Si te pareció interesante, compártelo:</p>
+							<div class="share-buttons">
+								<button type="button" class="btn-share">
+									Compartir
+								</button>
+								<a
+									href="#"
+									class="btn-share-wa"
+									id="btn-share-wa">
+									<span class="icon">🟢</span>
+									<span>WhatsApp</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+
+		<script>
+			// ----- Slider vertical (scroll + swipe + botones) -----
+			const slidesContainer = document.getElementById("slides");
+			const sections = Array.from(
+				slidesContainer.querySelectorAll("section")
+			);
+			const totalSlides = sections.length;
+			let currentIndex = 0;
+			let isAnimating = false;
+
+			function goToSlide(index) {
+				if (index < 0 || index >= totalSlides || isAnimating) return;
+				isAnimating = true;
+				currentIndex = index;
+				slidesContainer.style.transform = `translateY(-${
+					index * 100
+				}vh)`;
+				setTimeout(() => {
+					isAnimating = false;
+				}, 380);
+			}
+
+			const poster = document.getElementById("poster");
+
+			// Scroll (wheel) -> una pantalla por vez
+			poster.addEventListener(
+				"wheel",
+				(e) => {
+					e.preventDefault();
+					if (isAnimating) return;
+					if (e.deltaY > 25) {
+						goToSlide(currentIndex + 1);
+					} else if (e.deltaY < -25) {
+						goToSlide(currentIndex - 1);
+					}
+				},
+				{ passive: false }
+			);
+
+			// Swipe vertical (touch)
+			let startY = 0;
+			let startTime = 0;
+
+			poster.addEventListener(
+				"touchstart",
+				(e) => {
+					if (e.touches.length !== 1) return;
+					startY = e.touches[0].clientY;
+					startTime = Date.now();
+				},
+				{ passive: true }
+			);
+
+			poster.addEventListener(
+				"touchend",
+				(e) => {
+					const touch = e.changedTouches[0];
+					const deltaY = touch.clientY - startY;
+					const duration = Date.now() - startTime;
+
+					const minDistance = 60;
+					const maxDuration = 700;
+
+					if (
+						Math.abs(deltaY) > minDistance &&
+						duration < maxDuration
+					) {
+						if (deltaY < 0) {
+							goToSlide(currentIndex + 1);
+						} else {
+							goToSlide(currentIndex - 1);
+						}
+					}
+				},
+				{ passive: true }
+			);
+
+			// Botón flotante "Desliza" -> ir a la siguiente slide
+			const swipeHintBtn = document.querySelector(".swipe-hint");
+			swipeHintBtn.addEventListener("click", () => {
+				goToSlide(currentIndex + 1);
+			});
+
+			// ----- Menú hamburguesa -----
+			const hamburger = document.querySelector(".hamburger");
+			const menuItems = document.querySelectorAll(".menu-item");
+
+			hamburger.addEventListener("click", () => {
+				document.body.classList.toggle("nav-open");
+			});
+
+			menuItems.forEach((btn) => {
+				btn.addEventListener("click", () => {
+					const index = parseInt(btn.dataset.index, 10);
+					goToSlide(index);
+					document.body.classList.remove("nav-open");
+				});
+			});
+
+			// ----- Compartir -----
+			const shareBtn = document.querySelector(".btn-share");
+			const shareWaBtn = document.getElementById("btn-share-wa");
+
+			const shareData = {
+				title: "Cambio climático - Sebastián Tupiño",
+				text: "Revisa esta infografía sobre el cambio climático hecha por Sebastián Tupiño (2do de Primaria).",
+				url: window.location.href,
+			};
+
+			shareBtn.addEventListener("click", async () => {
+				if (navigator.share) {
+					try {
+						await navigator.share(shareData);
+					} catch (err) {
+						// usuario canceló
+					}
+				} else {
+					const waUrl =
+						"https://api.whatsapp.com/send?text=" +
+						encodeURIComponent(
+							`${shareData.text} ${shareData.url}`
+						);
+					window.open(waUrl, "_blank");
+				}
+			});
+
+			shareWaBtn.addEventListener("click", (e) => {
+				e.preventDefault();
+				const waUrl =
+					"https://api.whatsapp.com/send?text=" +
+					encodeURIComponent(`${shareData.text} ${shareData.url}`);
+				window.open(waUrl, "_blank");
+			});
+		</script>
+	</body>
 </html>
