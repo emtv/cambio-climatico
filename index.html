@@ -38,27 +38,25 @@
 			}
 
 			body {
-				overflow: hidden; /* movimiento controlado por el slider */
+				overflow-x: hidden; /* dejamos scroll nativo vertical */
 			}
 
-			/* SLIDER VERTICAL */
+			/* CONTENEDOR PRINCIPAL */
 			.poster {
 				max-width: 480px;
 				margin: 0 auto;
-				height: 100vh;
-				overflow: hidden;
+				min-height: 100vh;
 				position: relative;
 				padding: 0 1.25rem;
 			}
 
 			.slides {
 				width: 100%;
-				height: 100%;
-				transition: transform 0.35s ease-in-out;
 			}
 
+			/* Cada sección ocupa al menos una pantalla */
 			section {
-				height: 100vh;
+				min-height: 100vh;
 				padding: 1.25rem 0 2.3rem;
 				border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
 				display: flex;
@@ -66,10 +64,13 @@
 				justify-content: flex-start;
 			}
 
+			/* Portada bien encajada en 360x612 (sin recortar) */
 			.section-portada {
-				justify-content: space-between;
-				padding-top: 1.8rem; /* espacio menú */
+				padding-top: 3.6rem; /* espacio menú */
 				padding-bottom: 2.3rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
 			}
 
 			.page-title,
@@ -101,6 +102,11 @@
 				line-height: 1.5;
 				text-align: center;
 				font-size: 0.95rem;
+			}
+
+			/* Todos los contenidos principales empiezan alineados arriba */
+			section > div:first-child {
+				margin-top: 0.8rem;
 			}
 
 			.text-left p,
@@ -155,11 +161,10 @@
 				margin-bottom: 0.25rem;
 			}
 
-			/* Reducimos un poco las imágenes */
 			.shape-img,
 			.full-img {
-				width: 50%;
-				max-width: 50%;
+				width: 70%;
+				max-width: 70%;
 				display: block;
 				margin: 0.6rem auto 0;
 				border-radius: 999px;
@@ -220,11 +225,10 @@
 			}
 
 			.impact-img img {
-				width: 40%;
+				width: 75%;
 				display: block;
 				border-radius: 999px;
-				position: absolute;
-				margin-top: -10%;
+				margin: 0 auto;
 			}
 
 			ul {
@@ -264,11 +268,11 @@
 				margin-top: 1.2rem;
 				font-size: 1rem;
 				line-height: 1.8;
-				text-align: left;
+				text-align: center;
 			}
 
 			.credits-final p {
-				text-align: left;
+				text-align: center;
 			}
 
 			.credits-title {
@@ -331,6 +335,9 @@
 			}
 
 			@media (max-width: 360px) {
+				.section-portada {
+					padding-top: 0;
+				}
 				.impact-row {
 					flex-direction: column;
 				}
@@ -491,7 +498,7 @@
 				background: rgba(255, 233, 207, 0.15);
 			}
 
-			/* Botón flotante "swipe" */
+			/* Botón flotante "Desliza" */
 			.swipe-hint-wrap {
 				position: fixed;
 				left: 0;
@@ -500,8 +507,16 @@
 				max-width: 480px;
 				margin: 0 auto;
 				display: flex;
-				justify-content: center;
+				justify-content: flex-end;
+				padding-right: 1.25rem;
 				z-index: 20;
+				pointer-events: none;
+				transition: opacity 0.25s ease, transform 0.25s ease;
+			}
+
+			.swipe-hint-wrap.is-hidden {
+				opacity: 0;
+				transform: translateY(8px);
 				pointer-events: none;
 			}
 
@@ -513,14 +528,14 @@
 				padding: 0.45rem 0.9rem;
 				border-radius: 999px;
 				border: 1px solid rgba(94, 34, 34, 0.25);
-				background: rgba(255, 255, 255, 0.9);
+				background: rgba(255, 255, 255, 0.95);
 				font-size: 0.82rem;
 				font-weight: 600;
 				letter-spacing: 0.08em;
 				text-transform: uppercase;
 				color: var(--text-main);
 				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-				animation: swipeBounce 1.4s ease-in-out infinite;
+				animation: swipeBounce 1s ease-out infinite;
 			}
 
 			.swipe-hint-icon {
@@ -531,12 +546,64 @@
 				0%,
 				100% {
 					transform: translateY(0);
-					opacity: 0.85;
+					opacity: 0.9;
 				}
 				50% {
-					transform: translateY(-8px);
+					transform: translateY(-6px);
 					opacity: 1;
 				}
+			}
+
+			/* Dots laterales flotantes */
+			.side-dots {
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				max-width: 480px;
+				margin: 0 auto;
+				display: flex;
+				justify-content: flex-end;
+				padding-right: 0.6rem;
+				z-index: 21;
+				pointer-events: none;
+			}
+
+			.side-dots-inner {
+				pointer-events: auto;
+				display: flex;
+				flex-direction: column;
+				gap: 0.4rem;
+			}
+
+			.side-dot {
+				width: 9px;
+				height: 9px;
+				border-radius: 999px;
+				border: 1px solid rgba(94, 34, 34, 0.4);
+				background: rgba(255, 255, 255, 0.7);
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+				cursor: pointer;
+				padding: 0;
+				outline: none;
+			}
+
+			.side-dot.is-active {
+				width: 14px;
+				background: var(--accent);
+				border-color: var(--accent);
+			}
+
+			/* Ajustes específicos */
+
+			#medidas .actions-block img {
+				position: static !important;
+				z-index: auto !important;
+				opacity: 1 !important;
+				width: 60% !important;
+				margin: 0.6rem auto 0 !important;
+				right: auto !important;
 			}
 		</style>
 	</head>
@@ -558,54 +625,33 @@
 			<div class="menu-inner">
 				<div class="menu-title">Secciones</div>
 				<ul class="menu-list">
-					<li>
-						<button class="menu-item" data-index="0">
-							Portada
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="1">
-							¿Qué es?
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="2">
-							Causas y efectos
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="3">
-							Impactos
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="4">
-							Medidas
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="5">
-							¿Cómo contribuir?
-						</button>
-					</li>
-					<li>
-						<button class="menu-item" data-index="6">
-							Créditos
-						</button>
-					</li>
+					<li><button class="menu-item" data-index="0">Portada</button></li>
+					<li><button class="menu-item" data-index="1">¿Qué es?</button></li>
+					<li><button class="menu-item" data-index="2">Causas y efectos</button></li>
+					<li><button class="menu-item" data-index="3">Impactos</button></li>
+					<li><button class="menu-item" data-index="4">Medidas</button></li>
+					<li><button class="menu-item" data-index="5">¿Cómo contribuir?</button></li>
+					<li><button class="menu-item" data-index="6">Créditos</button></li>
 				</ul>
 			</div>
 		</div>
 
-		<!-- Botón flotante indicando swipe -->
-		<div class="swipe-hint-wrap">
+		<!-- Botón flotante indicando scroll -->
+		<div class="swipe-hint-wrap" id="swipeHintWrap">
 			<button class="swipe-hint" type="button">
 				<span class="swipe-hint-icon">👇</span>
 				<span>Desliza</span>
 			</button>
 		</div>
 
-		<!-- SLIDER VERTICAL -->
+		<!-- Bullets flotantes laterales -->
+		<div class="side-dots" id="sideDots">
+			<div class="side-dots-inner">
+				<!-- Dots se crean con JS -->
+			</div>
+		</div>
+
+		<!-- CONTENIDO -->
 		<main class="poster" id="poster">
 			<div class="slides" id="slides">
 				<!-- 1. Portada -->
@@ -791,7 +837,10 @@
 								<li>Reciclar y reutilizar materiales.</li>
 							</ul>
 
-							<img style="width: 50%;position: absolute;z-index: -999;opacity: 0.3;" src="img/acciones-personales.png" alt="Persona reciclando" class="shape-img">
+							<img
+								src="img/acciones-personales.png"
+								alt="Persona reciclando"
+								class="shape-img" />
 						</div>
 
 						<div class="actions-block">
@@ -807,13 +856,7 @@
 							<img
 								src="img/acciones-gubernamentales.png"
 								alt="Paneles solares"
-								class="shape-img"
-								style="
-									position: absolute;
-									margin-top: 35%;
-									right: -1%;
-									opacity: 0.7;
-								" />
+								class="shape-img" />
 						</div>
 					</div>
 				</section>
@@ -843,7 +886,7 @@
 					</div>
 				</section>
 
-				<!-- 7. Créditos (pantalla completa) -->
+				<!-- 7. Créditos -->
 				<section id="creditos">
 					<div>
 						<h2 class="credits-title">Créditos</h2>
@@ -883,87 +926,83 @@
 		</main>
 
 		<script>
-			// ----- Slider vertical (scroll + swipe + botones) -----
-			const slidesContainer = document.getElementById("slides");
 			const sections = Array.from(
-				slidesContainer.querySelectorAll("section")
+				document.querySelectorAll("#slides section")
 			);
-			const totalSlides = sections.length;
-			let currentIndex = 0;
-			let isAnimating = false;
+			let currentSectionIndex = 0;
 
-			function goToSlide(index) {
-				if (index < 0 || index >= totalSlides || isAnimating) return;
-				isAnimating = true;
-				currentIndex = index;
-				slidesContainer.style.transform = `translateY(-${
-					index * 100
-				}vh)`;
-				setTimeout(() => {
-					isAnimating = false;
-				}, 380);
+			// ----- Dots laterales -----
+			const sideDotsWrapper = document.getElementById("sideDots");
+			const sideDotsInner = sideDotsWrapper.querySelector(
+				".side-dots-inner"
+			);
+
+			sections.forEach((_section, index) => {
+				const dot = document.createElement("button");
+				dot.type = "button";
+				dot.className =
+					"side-dot" + (index === 0 ? " is-active" : "");
+				dot.dataset.index = index;
+				dot.addEventListener("click", () => {
+					sections[index].scrollIntoView({
+						behavior: "smooth",
+						block: "start",
+					});
+				});
+				sideDotsInner.appendChild(dot);
+			});
+
+			function updateDots(activeIndex) {
+				const allDots = document.querySelectorAll(".side-dot");
+				allDots.forEach((dot, i) => {
+					dot.classList.toggle("is-active", i === activeIndex);
+				});
 			}
 
-			const poster = document.getElementById("poster");
+			// Detectar sección actual según el scroll
+			function updateCurrentSection() {
+				let bestIndex = 0;
+				let bestDistance = Infinity;
+				const viewportCenter = window.innerHeight * 0.35;
 
-			// Scroll (wheel) -> una pantalla por vez
-			poster.addEventListener(
-				"wheel",
-				(e) => {
-					e.preventDefault();
-					if (isAnimating) return;
-					if (e.deltaY > 25) {
-						goToSlide(currentIndex + 1);
-					} else if (e.deltaY < -25) {
-						goToSlide(currentIndex - 1);
+				sections.forEach((sec, idx) => {
+					const rect = sec.getBoundingClientRect();
+					const distance = Math.abs(rect.top - viewportCenter);
+					if (distance < bestDistance) {
+						bestDistance = distance;
+						bestIndex = idx;
 					}
-				},
-				{ passive: false }
-			);
+				});
 
-			// Swipe vertical (touch)
-			let startY = 0;
-			let startTime = 0;
+				if (bestIndex !== currentSectionIndex) {
+					currentSectionIndex = bestIndex;
+					updateDots(currentSectionIndex);
+				}
+			}
 
-			poster.addEventListener(
-				"touchstart",
-				(e) => {
-					if (e.touches.length !== 1) return;
-					startY = e.touches[0].clientY;
-					startTime = Date.now();
-				},
-				{ passive: true }
-			);
+			// ----- Botón "Desliza" -----
+			const swipeHintWrap = document.getElementById("swipeHintWrap");
+			const swipeHintBtn = swipeHintWrap.querySelector(".swipe-hint");
 
-			poster.addEventListener(
-				"touchend",
-				(e) => {
-					const touch = e.changedTouches[0];
-					const deltaY = touch.clientY - startY;
-					const duration = Date.now() - startTime;
-
-					const minDistance = 60;
-					const maxDuration = 700;
-
-					if (
-						Math.abs(deltaY) > minDistance &&
-						duration < maxDuration
-					) {
-						if (deltaY < 0) {
-							goToSlide(currentIndex + 1);
-						} else {
-							goToSlide(currentIndex - 1);
-						}
-					}
-				},
-				{ passive: true }
-			);
-
-			// Botón flotante "Desliza" -> ir a la siguiente slide
-			const swipeHintBtn = document.querySelector(".swipe-hint");
 			swipeHintBtn.addEventListener("click", () => {
-				goToSlide(currentIndex + 1);
+				const nextIndex = Math.min(
+					currentSectionIndex + 1,
+					sections.length - 1
+				);
+				sections[nextIndex].scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+				});
 			});
+
+			// Mostrar/ocultar "Desliza" según scroll (solo en portada)
+			function updateSwipeHintVisibility() {
+				if (window.scrollY > 40) {
+					swipeHintWrap.classList.add("is-hidden");
+				} else {
+					swipeHintWrap.classList.remove("is-hidden");
+				}
+			}
 
 			// ----- Menú hamburguesa -----
 			const hamburger = document.querySelector(".hamburger");
@@ -976,7 +1015,10 @@
 			menuItems.forEach((btn) => {
 				btn.addEventListener("click", () => {
 					const index = parseInt(btn.dataset.index, 10);
-					goToSlide(index);
+					sections[index].scrollIntoView({
+						behavior: "smooth",
+						block: "start",
+					});
 					document.body.classList.remove("nav-open");
 				});
 			});
@@ -1015,6 +1057,16 @@
 					encodeURIComponent(`${shareData.text} ${shareData.url}`);
 				window.open(waUrl, "_blank");
 			});
+
+			// ----- Scroll listener -----
+			window.addEventListener("scroll", () => {
+				updateCurrentSection();
+				updateSwipeHintVisibility();
+			});
+
+			// Estado inicial
+			updateCurrentSection();
+			updateSwipeHintVisibility();
 		</script>
 	</body>
 </html>
