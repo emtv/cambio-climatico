@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cambio Climático - Sebastián Tupiño</title>
+
+  <!-- Tipografías (puedes cambiarlas o quitarlas si no usas Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fff6e9;
+      --text-main: #5e2222;
+      --text-strong: #7b1b1b;
+      --accent: #ff6a1a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .poster {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    section {
+      padding: 1.5rem 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.06);
+    }
+
+    .page-title,
+    h1, h2, h3 {
+      font-family: "Baloo 2", system-ui, sans-serif;
+      color: var(--text-strong);
+      margin: 0 0 0.75rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .text-left p,
+    .text-left {
+      text-align: left;
+    }
+
+    .small {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .strong {
+      font-weight: 700;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .logo {
+      width: 240px;
+      height: 240px;
+      margin: 1rem auto;
+      display: block;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .big-year {
+      font-family: "Baloo 2", system-ui, sans-serif;
+      font-size: 1.8rem;
+      text-align: center;
+      color: var(--accent);
+      margin-top: 1.5rem;
+    }
+
+    .meta {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .meta span.label {
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+
+    .meta p {
+      text-align: left;
+    }
+
+    .shape-img,
+    .full-img {
+      width: 100%;
+      display: block;
+      margin: 1rem auto 0;
+      border-radius: 999px;
+    }
+
+    .full-img {
+      border-radius: 1.25rem;
+    }
+
+    .quote-box {
+      margin: 1rem auto 0;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    /* Página causas / efectos */
+    .subheading {
+      font-family: "Baloo 2", system-ui, sans-serif;
+      color: var(--text-strong);
+      font-size: 1.15rem;
+      text-align: center;
+      margin: 1.25rem 0 0.35rem;
+    }
+
+    /* Impactos: filas con imagen y texto */
+    .impacts {
+      margin-top: 1.25rem;
+    }
+
+    .impact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .impact-text {
+      flex: 1.1;
+    }
+
+    .impact-text-title {
+      font-family: "Baloo 2", system-ui, sans-serif;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .impact-text p {
+      text-align: left;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .impact-img {
+      flex: 1;
+    }
+
+    .impact-img img {
+      width: 100%;
+      display: block;
+      border-radius: 999px;
+    }
+
+    /* Listas medidas */
+    ul {
+      padding-left: 1.1rem;
+      margin: 0.5rem 0 0;
+      font-size: 0.95rem;
+    }
+
+    ul li {
+      margin-bottom: 0.35rem;
+    }
+
+    .actions-block {
+      margin-top: 1.25rem;
+    }
+
+    .actions-title {
+      font-family: "Baloo 2", system-ui, sans-serif;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .contribution-text {
+      margin-top: 0.75rem;
+    }
+
+    .final-quote {
+      margin-top: 1.25rem;
+      font-style: italic;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* Pequeño ajuste para pantallas muy estrechas */
+    @media (max-width: 360px) {
+      .impact-row {
+        flex-direction: column;
+      }
+      .impact-img {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster">
+
+    <!-- Página 1: Portada -->
+    <section>
+      <p class="small strong">
+        “AÑO DE LA RECUPERACIÓN Y LA CONSOLIDACIÓN<br>
+        DE LA ECONOMÍA PERUANA”
+      </p>
+
+      <p class="page-title accent" style="margin-top:1.3rem;">
+        COLEGIO BILINGÜE<br>
+        SANTA MARÍA DE LA GRACIA
+      </p>
+
+      <!-- Logo -->
+      <img src="img/logo-colegio.png" alt="Colegio Santa María de la Gracia" class="logo">
+
+      <h1>CAMBIO CLIMÁTICO</h1>
+
+      <!-- Silueta portada -->
+      <img src="img/portada-cambio-climatico.png"
+           alt="Ilustración cambio climático"
+           class="shape-img">
+
+      <div class="meta">
+        <p><span class="label">Alumno:</span> Sebastián Tupiño Cervantes</p>
+        <p><span class="label">Profesora:</span> Mary De la Cruz</p>
+        <p><span class="label">Grado:</span> 2do Primaria</p>
+      </div>
+
+      <p class="big-year">2025</p>
+    </section>
+
+    <!-- Página 2: ¿Qué es el cambio climático? -->
+    <section>
+      <h2>¿Qué es el cambio<br>climático?</h2>
+
+      <p>
+        Se refiere a los cambios de relevancia que han sufrido los niveles del clima,
+        a nivel de la temperatura, la lluvia y otros aspectos externos, como
+        consecuencia en parte de la actividad humana.
+      </p>
+
+      <!-- Imagen silueta + frase -->
+      <img src="img/que-es-cambio-climatico.png"
+           alt="Ciudad afectada por el cambio climático"
+           class="shape-img">
+
+      <div class="quote-box">
+        “De la humanidad y sus actividades depende la sostenibilidad del planeta”
+      </div>
+    </section>
+
+    <!-- Página 3: Causas y efectos -->
+    <section class="text-left">
+      <!-- Imagen deforestación -->
+      <img src="img/deforestacion.png"
+           alt="Deforestación"
+           class="full-img">
+
+      <h2>¿Cuáles son las principales<br>causas del cambio climático?</h2>
+
+      <p>
+        Las principales causas del cambio climático se relacionan a actividades como la
+        deforestación (menos absorción en CO<sub>2</sub>), la emisión de Gases de
+        Efecto Invernadero (GEI), la industrialización, etc.
+      </p>
+
+      <h3 class="subheading">Efectos y consecuencias</h3>
+
+      <p>
+        El principal efecto del cambio climático ha sido el cambio drástico de temperaturas
+        en todo el planeta. Dicho cambio ha traído consigo ahora el surgimiento de
+        fenómenos meteorológicos de relevancia, altos niveles de deforestación,
+        pérdida de biodiversidad, entre otros.
+      </p>
+    </section>
+
+    <!-- Página 4: Impactos -->
+    <section>
+      <h2>¿Qué impactos ha<br>tenido?</h2>
+
+      <div class="impacts">
+
+        <!-- Salud -->
+        <div class="impact-row">
+          <div class="impact-text">
+            <div class="impact-text-title">Salud</div>
+            <p>
+              Mayor probabilidad de enfermedades respiratorias, propagación de enfermedades
+              por vectores (mosquitos) como el dengue.
+            </p>
+          </div>
+          <div class="impact-img">
+            <img src="img/impacto-salud.png" alt="Mosquito sobre piel">
+          </div>
+        </div>
+
+        <!-- Agricultura -->
+        <div class="impact-row">
+          <div class="impact-text">
+            <div class="impact-text-title">Agricultura</div>
+            <p>
+              Afecta los ciclos de los cultivos, impactando la sostenibilidad alimentaria.
+            </p>
+          </div>
+          <div class="impact-img">
+            <img src="img/impacto-agricultura.png" alt="Cultivos de trigo">
+          </div>
+        </div>
+
+        <!-- Economía -->
+        <div class="impact-row">
+          <div class="impact-text">
+            <div class="impact-text-title">Economía</div>
+            <p>
+              Los fenómenos meteorológicos atípicos pueden afectar la infraestructura económica.
+            </p>
+          </div>
+          <div class="impact-img">
+            <img src="img/impacto-economia.png" alt="Monedas y gráfico económico">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Página 5: Medidas para mitigarlo -->
+    <section class="text-left">
+      <h2 style="text-align:center;">Medidas para<br>mitigarlo</h2>
+
+      <!-- Acciones personales -->
+      <div class="actions-block">
+        <div class="actions-title">Acciones personales</div>
+        <ul>
+          <li>Usar medios de transporte amigables con el medio ambiente.</li>
+          <li>Reducir consumo energético.</li>
+          <li>Reciclar y reutilizar materiales.</li>
+        </ul>
+
+        <img src="img/acciones-personales.png"
+             alt="Persona reciclando"
+             class="shape-img">
+      </div>
+
+      <!-- Acciones gubernamentales -->
+      <div class="actions-block">
+        <div class="actions-title">Acciones gubernamentales</div>
+        <ul>
+          <li>Fomentar uso de energías alternativas.</li>
+          <li>Medidas de reducción de CO<sub>2</sub>.</li>
+          <li>Legislación de conservación.</li>
+        </ul>
+
+        <img src="img/acciones-gubernamentales.png"
+             alt="Paneles solares"
+             class="shape-img">
+      </div>
+    </section>
+
+    <!-- Página 6: ¿Cómo puedo contribuir? -->
+    <section>
+      <h2>¿Cómo puedo<br>contribuir?</h2>
+
+      <p class="contribution-text">
+        El cambio individual, sobre todo a nivel de los patrones de consumo de bienes,
+        el uso de transportes no contaminantes, la reutilización y reciclaje de materiales,
+        entre otras acciones, son de gran relevancia para hacer frente a este fenómeno global.
+      </p>
+
+      <img src="img/como-contribuir.png"
+           alt="Personas recogiendo basura en un bosque"
+           class="full-img">
+
+      <p class="final-quote">
+        “Los pequeños cambios hacen una gran diferencia cuando los hacemos todos juntos”
+      </p>
+    </section>
+
+  </main>
+</body>
+</html>
